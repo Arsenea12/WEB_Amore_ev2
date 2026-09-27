@@ -73,6 +73,8 @@ Para crear un superusuario dentro del contenedor:
 docker compose exec web python manage.py createsuperuser
 ```
 
+Con esa cuenta puedes entrar tanto al sitio (`http://localhost:8000/`) como al panel de administración (`http://localhost:8000/admin/`).
+
 Para cargar las encuestas de ejemplo:
 ```
 docker compose exec web python manage.py cargar_encuestas
@@ -83,6 +85,18 @@ Puedes copiar `.env.example` a `.env` en la raíz del proyecto para personalizar
 Para ver el contenido de la base de datos directamente (más allá del panel `/admin/`):
 ```
 docker compose exec db mysql -u django_user -p amore_di_ramos
+```
+
+Para apagar los contenedores cuando termines:
+
+```
+docker compose down
+```
+
+Si además quieres borrar los datos guardados en la base (usuarios, encuestas, productos que hayas creado), use `-v`:
+
+```
+docker compose down -v
 ```
 
 ## Cómo ejecutar el proyecto (resumen rápido)
