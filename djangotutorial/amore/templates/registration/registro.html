@@ -1,0 +1,32 @@
+{% extends "amore/base.html" %}
+
+{% block title %}Regístrate{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>Crea tu cuenta</h2>
+        <span class="eyebrow-lux">Únete a Amore Di Ramos</span>
+    </div>
+
+    <form method="post" style="display:flex;flex-direction:column;gap:1.25rem;max-width:420px;">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <p class="error-message"><strong>{{ form.non_field_errors.0 }}</strong></p>
+        {% endif %}
+        {% for field in form %}
+            <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                <span style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">{{ field.label }}</span>
+                {{ field }}
+                {% if field.help_text %}<span style="font-size:0.78rem;color:var(--muted);">{{ field.help_text|safe }}</span>{% endif %}
+                {% for error in field.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </label>
+        {% endfor %}
+        <button class="button-lux button-lux--dark" type="submit">Crear cuenta</button>
+    </form>
+
+    <p style="margin-top:1.5rem;">¿Ya tienes cuenta? <a href="{% url 'login' %}">Ingresa aquí</a>.</p>
+</section>
+{% endblock %}

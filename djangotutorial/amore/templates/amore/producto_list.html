@@ -1,0 +1,56 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}Catálogo{% endblock %}
+{% block nav_productos %}active{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>Catálogo de productos</h2>
+        <span class="eyebrow-lux">Ramos, arreglos y plantas</span>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+        <input
+            type="text"
+            id="filtro-productos"
+            placeholder="Filtrar por nombre o tipo..."
+            style="padding:0.7rem 1rem;border:1px solid var(--line);font-family:inherit;font-size:0.95rem;min-width:260px;">
+        {% if user.is_staff %}
+            <a class="button-lux button-lux--dark" href="{% url 'amore:producto_create' %}">+ Nuevo producto</a>
+        {% endif %}
+    </div>
+
+    {% if productos %}
+    <div class="collection-grid" id="grid-productos">
+    {% for producto in productos %}
+        {% cycle 'floral-02.jpg' 'floral-03.jpg' 'floral-04.jpg' 'floral-05.jpg' 'floral-06.jpg' 'floral-07.jpg' 'floral-08.jpg' 'floral-09.jpg' 'floral-10.jpg' as img_name silent %}
+        <a class="collection-tile producto-tile" href="{% url 'amore:producto_detail' producto.pk %}"
+           data-nombre="{{ producto.nombre|lower }}" data-tipo="{{ producto.get_tipo_display|lower }}">
+            <img src="{% static 'amore/imagenes/' %}{{ img_name }}" alt="{{ producto.nombre }}">
+            <div class="collection-tile-copy">
+                <span class="tile-index">{{ producto.get_tipo_display }}{% if not producto.disponible %} · Agotado{% endif %}</span>
+                <span class="tile-title">{{ producto.nombre }} — ${{ producto.precio }}</span>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+    <p id="sin-resultados-filtro" style="display:none;color:var(--muted);">No hay productos que coincidan con tu búsqueda.</p>
+
+    {% if is_paginated %}
+        <div style="display:flex;gap:1rem;justify-content:center;margin:2rem 0 3rem;">
+            {% if page_obj.has_previous %}
+                <a class="button-lux button-lux--ghost" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+            <span style="align-self:center;color:var(--muted);">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a class="button-lux button-lux--ghost" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% else %}
+    <p class="empty-state">Todavía no hay productos cargados en el catálogo.</p>
+    {% endif %}
+</section>
+{% endblock %}

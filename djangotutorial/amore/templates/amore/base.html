@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inicio{% endblock %} | Amore Di Ramos</title>
+    <link rel="stylesheet" href="{% static 'amore/estilos/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'amore/estilos/style.css' %}">
+</head>
+<body>
+    <header class="lux-header">
+        <div class="side left">
+            <nav aria-label="Principal">
+                <ul class="nav-links">
+                    <li><a class="{% block nav_index %}{% endblock %}" href="{% url 'amore:index' %}">Encuestas</a></li>
+                    <li><a class="{% block nav_productos %}{% endblock %}" href="{% url 'amore:producto_list' %}">Catálogo</a></li>
+                    <li><a class="{% block nav_historia %}{% endblock %}" href="{% url 'amore:historia' %}">Historia</a></li>
+                </ul>
+            </nav>
+        </div>
+        <a class="lux-logo" href="{% url 'amore:index' %}">
+            <span class="brand-label">Maison Ramos</span>
+            <h1 class="brand-title">Amore Di Ramos</h1>
+        </a>
+        <div class="side right">
+            <nav aria-label="Secundaria">
+                <ul class="nav-links">
+                    <li><a class="{% block nav_contacto %}{% endblock %}" href="{% url 'amore:contacto' %}">Contacto</a></li>
+                    {% if user.is_authenticated %}
+                        <li><span style="opacity:0.7;">Hola, {{ user.username }}</span></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" style="background:none;border:none;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0;">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}?next={{ request.path }}">Ingresar</a></li>
+                        <li><a href="{% url 'amore:registro' %}">Regístrate</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% if messages %}
+            <div class="lux-shell" style="padding-top:1.5rem;">
+                {% for message in messages %}
+                    <p class="error-message" style="{% if message.tags == 'success' %}color: #3e6259;{% endif %}"><strong>{{ message }}</strong></p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="lux-footer">
+        <div class="lux-shell">
+            <div class="lux-footer-top">
+                <div class="lux-footer-brand">
+                    <p class="brand-title">Amore Di Ramos</p>
+                    <p>Alta floristería desde 1882. Arte floral con alma, hecho a mano en cada tallo.</p>
+                </div>
+                <div class="lux-footer-links">
+                    <div class="col">
+                        <span class="col-title">Explorar</span>
+                        <a href="{% url 'amore:index' %}">Encuestas</a>
+                        <a href="{% url 'amore:historia' %}">Historia</a>
+                    </div>
+                    <div class="col">
+                        <span class="col-title">Contacto</span>
+                        <a href="{% url 'amore:contacto' %}">Escribinos</a>
+                        <a href="mailto:hola@amorediramos.com">hola@amorediramos.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="lux-footer-bottom">
+                <span>© 2026 Maison Ramos</span>
+                <span>Elegancia floral hecha a mano</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'amore/js/main.js' %}"></script>
+</body>
+</html>

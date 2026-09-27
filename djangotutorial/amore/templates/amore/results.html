@@ -1,0 +1,33 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}Resultados{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="product-layout">
+        <div class="product-media">
+            <img src="{% static 'amore/imagenes/floral-03.jpg' %}" alt="{{ question.question_text }}">
+        </div>
+
+        <div class="product-info">
+            <span class="eyebrow-lux">Resultados</span>
+            <h2>{{ question.question_text }}</h2>
+            <p>Gracias por participar. Así va la votación hasta ahora.</p>
+
+            <ul class="results-list">
+            {% for choice in question.choices.all %}
+                <li>
+                    <span class="choice-name">{{ choice.choice_text }}</span>
+                    <span class="votes-count">{{ choice.votes }} voto{{ choice.votes|pluralize }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+
+            <a class="button-lux button-lux--dark" href="{% url 'amore:detail' question.id %}">Votar de nuevo</a>
+        </div>
+    </div>
+
+    <a class="button-lux button-lux--ghost" href="{% url 'amore:index' %}">Volver a Encuestas</a>
+</section>
+{% endblock %}

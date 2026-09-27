@@ -1,0 +1,51 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+{% block nav_contacto %}active{% endblock %}
+
+{% block content %}
+<section class="lux-hero" style="height: min(50vh, 480px); min-height: 320px;">
+    <img src="{% static 'amore/imagenes/floral-09.jpg' %}" alt="Contacto Amore Di Ramos">
+    <div class="lux-hero-copy">
+        <span class="eyebrow-lux">Conecta con nosotros</span>
+        <h2>Un ramo hecho a tu medida</h2>
+        <p>Cuéntanos tu ocasión y estilo. Nuestro equipo Ramos diseñará una propuesta única con la misma pasión de siempre.</p>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="editorial">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/roses-watercolor.jpg' %}" alt="Ramo de rosas Amore Di Ramos">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">Escribinos</span>
+            <h2>Estamos para ayudarte</h2>
+            <form class="contact-form" action="#" method="post" style="display:flex;flex-direction:column;gap:1.25rem;margin-top:1.5rem;">
+                {% csrf_token %}
+                <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                    <span style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;">Nombre completo</span>
+                    <input type="text" name="name" required style="padding:0.85rem 1rem;border:1px solid var(--line);font-family:inherit;font-size:1rem;">
+                </label>
+                <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                    <span style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;">Email</span>
+                    <input type="email" name="email" required style="padding:0.85rem 1rem;border:1px solid var(--line);font-family:inherit;font-size:1rem;">
+                </label>
+                <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                    <span style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;">Teléfono</span>
+                    <input type="tel" name="phone" style="padding:0.85rem 1rem;border:1px solid var(--line);font-family:inherit;font-size:1rem;">
+                </label>
+                <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                    <span style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;">Descripción</span>
+                    <textarea name="message" rows="5" required style="padding:0.85rem 1rem;border:1px solid var(--line);font-family:inherit;font-size:1rem;resize:vertical;"></textarea>
+                </label>
+                <button class="button-lux button-lux--dark" type="submit">Enviar solicitud</button>
+            </form>
+            <p style="margin-top:2rem;font-size:0.9rem;color:var(--muted);">
+                O escribinos a <a href="mailto:hola@amorediramos.com">hola@amorediramos.com</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}Historia{% endblock %}
+{% block nav_historia %}active{% endblock %}
+
+{% block content %}
+<section class="lux-hero" style="height: min(60vh, 560px); min-height: 360px;">
+    <img src="{% static 'amore/imagenes/floral-10.jpg' %}" alt="Historia Amore Di Ramos">
+    <div class="lux-hero-copy">
+        <span class="eyebrow-lux">Historia</span>
+        <h2>La Maison detrás del ramo</h2>
+        <p>Más de un siglo tejiendo tradición, pasión y un diseño floral que solo una familia con apellido Ramos puede ofrecer.</p>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="editorial">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/floral-06.jpg' %}" alt="1882">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">1882</span>
+            <h2>El primer atelier</h2>
+            <p>Se abre el primer atelier Ramos, inspirado por los jardines de la Toscana y la nobleza italiana. El arte floral se cultiva desde el apellido.</p>
+        </div>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="editorial reverse">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/floral-11.jpg' %}" alt="1950">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">1950</span>
+            <h2>Segunda generación</h2>
+            <p>La segunda generación lidera la maison con creaciones más profundas y una estética refinada que consolida el nombre Ramos como sinónimo de excelencia.</p>
+        </div>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="editorial">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/floral-14.jpg' %}" alt="2026">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">2026</span>
+            <h2>Hoy</h2>
+            <p>Seguimos ofreciendo ramos personalizados con técnicas artesanales y un sello de lujo íntimo. Cada creación honra el juramento de 1882.</p>
+        </div>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>Tradizione, passione ed eccellenza</h2>
+        <span class="eyebrow-lux">Nuestra filosofía</span>
+    </div>
+    <p style="max-width: 42rem; margin: 0 auto 3rem; text-align: center; line-height: 1.8; color: var(--muted);">
+        La nuestra no es una historia que se escribe con tinta, sino con pétalos y linaje. Seleccionamos cada tallo bajo la primera luz de la mañana, tratando cada flor como una gema preciosa y esculpiendo legados vivos.
+    </p>
+    <div class="collection-grid">
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-15.jpg' %}" alt="Detalle">
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-16.jpg' %}" alt="Detalle">
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-17.jpg' %}" alt="Detalle">
+        </div>
+    </div>
+</section>
+{% endblock %}

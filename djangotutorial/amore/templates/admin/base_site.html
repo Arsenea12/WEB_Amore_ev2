@@ -1,0 +1,157 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'amore/estilos/fonts.css' %}">
+<style>
+  :root {
+    --admin-black: #141210;
+    --admin-white: #a59292;
+    --admin-cream: #d0b8ac;
+    --admin-stone: #573d06;
+    --admin-rose: #a8695a;
+    --admin-text: #c5af8d;
+    --admin-line: rgba(20, 18, 16, 0.14);
+  }
+
+  body {
+    font-family: "fan", system-ui, sans-serif;
+    color: var(--admin-text);
+    background: var(--admin-white);
+  }
+
+  #header {
+    background: var(--admin-black);
+    color: var(--admin-white);
+  }
+
+  #branding h1,
+  #branding h1 a:link,
+  #branding h1 a:visited {
+    color: var(--admin-white);
+    font-family: "fanTitle", Georgia, serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  #user-tools,
+  #user-tools a:link,
+  #user-tools a:visited {
+    color: var(--admin-cream);
+  }
+
+  div.breadcrumbs {
+    background: var(--admin-stone);
+    color: var(--admin-text);
+  }
+
+  div.breadcrumbs a,
+  a:link,
+  a:visited {
+    color: var(--admin-rose);
+  }
+
+  .module h2,
+  .module caption,
+  .inline-group h2 {
+    background: var(--admin-walnut, #4a3f36);
+  }
+
+  input[type="submit"],
+  .submit-row input,
+  a.button,
+  button {
+    background: var(--admin-rose);
+    border-color: var(--admin-rose);
+    color: var(--admin-white);
+  }
+
+  input[type="submit"]:hover,
+  .submit-row input:hover,
+  a.button:hover,
+  button:hover {
+    background: var(--admin-black);
+    border-color: var(--admin-black);
+  }
+
+  .object-tools a {
+    background: var(--admin-rose);
+  }
+
+  .object-tools a:hover {
+    background: var(--admin-black);
+  }
+
+  table thead th {
+    background: var(--admin-stone);
+  }
+
+  tr:nth-child(odd),
+  .row-form-errors {
+    background: rgba(208, 184, 172, 0.16);
+  }
+
+  body.dashboard #content-main {
+    width: calc(100% - 280px);
+    position: relative;
+  }
+
+  body.dashboard #content-main::after {
+    content: "";
+    position: fixed;
+    top: 4rem;
+    right: 8rem;
+    width: min(81vw, 890px);
+    height: min(97vh, 860px);
+    background: url("{% static 'amore/imagenes/admin_im.jpg' %}") center / cover no-repeat;
+    border: 8px solid var(--admin-white);
+    box-shadow: 0 12px 28px rgba(20, 18, 16, 0.18);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  #nav-sidebar,
+  #content-main .app-amore,
+  #content-main .app-auth {
+    position: relative;
+    z-index: 1;
+    width: 630px;
+  }
+
+  #content-related {
+    width: 260px;
+    height: min(100vh, 188px);
+  }
+
+  #content-related .module {
+    width: 100%;
+  }
+
+  @media (max-width: 1200px) {
+    body.dashboard #content-main {
+      width: 100%;
+    }
+
+    body.dashboard #content-main .app-amore,
+    body.dashboard #content-main .app-auth {
+      width: 100%;
+    }
+
+    body.dashboard #content-main::after {
+      display: none;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Amore Di Ramos{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">Amore Di Ramos</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

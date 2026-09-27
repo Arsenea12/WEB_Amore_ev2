@@ -1,0 +1,182 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+{% block nav_index %}active{% endblock %}
+
+{% block content %}
+
+{# hero #}
+<section class="lux-hero">
+    <video autoplay muted loop playsinline poster="{% static 'amore/imagenes/roses-watercolor.jpg' %}">
+        <source src="{% static 'amore/videos/hero-main.mp4' %}" type="video/mp4">
+    </video>
+    <div class="lux-hero-copy">
+        <span class="eyebrow-lux">Alta floristería · Desde 1882</span>
+        <h2>El arte del ramo perfecto</h2>
+        <p>Creaciones exclusivas inspiradas en la Toscana y el patrimonio Ramos. Belleza, tradición y detalle en cada pétalo.</p>
+        <a class="button-lux button-lux--light" href="#colecciones">Ver encuestas</a>
+    </div>
+</section>
+
+{# editorial #}
+<section class="lux-shell">
+    <div class="editorial">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/floral-01.jpg' %}" alt="Composición floral Amore Di Ramos">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">Tradición familiar</span>
+            <h2>Casi 150 años cuidando cada tallo</h2>
+            <p>Un método artesanal y una sensibilidad atemporal transmitida de generación en generación. Cada ramo lleva el sello de una familia dedicada por completo al arte floral.</p>
+            <a class="button-lux button-lux--ghost" href="{% url 'amore:historia' %}">Descubrir nuestra historia</a>
+        </div>
+    </div>
+</section>
+
+{# banner #}
+<section class="lux-banner">
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'amore/videos/hero-secondary.mp4' %}" type="video/mp4">
+    </video>
+    <div class="lux-banner-copy">
+        <div>
+            <span class="eyebrow-lux">Diseño exclusivo</span>
+            <h3>Momentos que merecen un ramo distinto</h3>
+        </div>
+    </div>
+</section>
+
+{# encuestas #}
+<section class="lux-shell" id="colecciones">
+    <div class="section-head">
+        <h2>Encuestas activas</h2>
+        <span class="eyebrow-lux">Vota por tu favorita</span>
+    </div>
+
+    {% if latest_question_list %}
+    <div class="collection-grid">
+    {% for question in latest_question_list %}
+        <a class="collection-tile" href="{% url 'amore:detail' question.id %}">
+            {% cycle 'floral-02.jpg' 'floral-03.jpg' 'floral-04.jpg' 'floral-05.jpg' 'floral-06.jpg' 'floral-07.jpg' 'floral-08.jpg' 'floral-09.jpg' 'floral-10.jpg' as img_name silent %}
+            <img src="{% static 'amore/imagenes/' %}{{ img_name }}" alt="{{ question.question_text }}">
+            <div class="collection-tile-copy">
+                <span class="tile-index">Encuesta {{ forloop.counter }}</span>
+                <span class="tile-title">{{ question.question_text }}</span>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+{% else %}
+    <p class="empty-state">Todavía no hay encuestas disponibles. Vuelve pronto.</p>
+{% endif %}
+</section>
+
+{# editorial #}
+<section class="lux-shell">
+    <div class="editorial reverse">
+        <div class="editorial-media">
+            <img src="{% static 'amore/imagenes/floral-07.jpg' %}" alt="Entrega premium Amore Di Ramos">
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">Entrega premium</span>
+            <h2>Presentación impecable, siempre</h2>
+            <p>Servicio personalizado para que cada ramo llegue como una obra de arte. Empaque, transporte y detalle pensados con el mismo cuidado que el diseño floral.</p>
+            <a class="button-lux button-lux--ghost" href="{% url 'amore:contacto' %}">Contactanos</a>
+        </div>
+    </div>
+</section>
+
+{# banner #}
+<section class="lux-banner">
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'amore/videos/banner-video.mp4' %}" type="video/mp4">
+    </video>
+    <div class="lux-banner-copy">
+        <div>
+            <span class="eyebrow-lux">Colección de temporada</span>
+            <h3>Flores que cuentan historias</h3>
+        </div>
+    </div>
+</section>
+
+{# galeria #}
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>Galería</h2>
+        <span class="eyebrow-lux">Momentos florales</span>
+    </div>
+    <div class="collection-grid">
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-08.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Rosas silvestres</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-09.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Bouquet clásico</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-10.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Composición primaveral</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-11.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Detalle artesanal</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-12.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Claveles y eucalipto</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-13.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Ramo de temporada</span></div>
+        </div>
+    </div>
+</section>
+
+{# video y galeria #}
+<section class="lux-shell">
+    <div class="editorial">
+        <div class="editorial-media">
+            <video autoplay muted loop playsinline>
+                <source src="{% static 'amore/videos/accent-video.mp4' %}" type="video/mp4">
+            </video>
+        </div>
+        <div class="editorial-copy">
+            <span class="eyebrow-lux">Arte vivo</span>
+            <h2>Cada tallo cuenta</h2>
+            <p>Seleccionamos cada flor bajo la primera luz de la mañana. Porque hay quienes diseñan ramos por oficio, y nosotros llevamos el amor a los Ramos en la sangre.</p>
+        </div>
+    </div>
+</section>
+
+<section class="lux-shell">
+    <div class="collection-grid">
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-14.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Elegancia minimal</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-15.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Texturas naturales</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-16.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Bouquet romántico</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/floral-17.jpg' %}" alt="Arreglo floral">
+            <div class="collection-tile-copy"><span class="tile-title">Jardín interior</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/claveles.jpg' %}" alt="Claveles">
+            <div class="collection-tile-copy"><span class="tile-title">Claveles</span></div>
+        </div>
+        <div class="collection-tile">
+            <img src="{% static 'amore/imagenes/roses-watercolor.jpg' %}" alt="Rosas en acuarela">
+            <div class="collection-tile-copy"><span class="tile-title">Rosas acuarela</span></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

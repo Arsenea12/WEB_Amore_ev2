@@ -1,0 +1,33 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+{% block nav_productos %}active{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="product-layout">
+        <div class="product-media">
+            <img src="{% static 'amore/imagenes/floral-11.jpg' %}" alt="{{ producto.nombre }}">
+        </div>
+        <div class="product-info">
+            <span class="eyebrow-lux">{{ producto.get_tipo_display }}</span>
+            <h2>{{ producto.nombre }}</h2>
+            <p>{{ producto.descripcion|default:"Sin descripción disponible."|linebreaksbr }}</p>
+            <p style="font-size:1.4rem;font-weight:600;">${{ producto.precio }}</p>
+            <p style="color:var(--muted);">{% if producto.disponible %}Disponible{% else %}Agotado{% endif %}</p>
+
+            {% if user.is_staff %}
+            <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+                <a class="button-lux button-lux--ghost" href="{% url 'amore:producto_update' producto.pk %}">Editar</a>
+                <form action="{% url 'amore:producto_delete' producto.pk %}" method="post" class="form-eliminar-producto">
+                    {% csrf_token %}
+                    <button type="submit" class="button-lux button-lux--ghost">Eliminar</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <a class="button-lux button-lux--ghost" href="{% url 'amore:producto_list' %}">Volver al catálogo</a>
+</section>
+{% endblock %}

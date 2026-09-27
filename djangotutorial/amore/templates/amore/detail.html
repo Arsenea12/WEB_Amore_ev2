@@ -1,0 +1,41 @@
+{% extends "amore/base.html" %}
+{% load static %}
+
+{% block title %}{{ question.question_text }}{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="product-layout">
+        <div class="product-media">
+            <img src="{% static 'amore/imagenes/floral-02.jpg' %}" alt="{{ question.question_text }}">
+        </div>
+
+        <div class="product-info">
+            <span class="eyebrow-lux">Encuesta</span>
+            <h2>{{ question.question_text }}</h2>
+            <p>Selecciona tu opción favorita y ayúdanos a conocer tu opinión sobre nuestras creaciones.</p>
+
+            <form action="{% url 'amore:vote' question.id %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend></legend>
+                    {% if error_message %}
+                        <p class="error-message"><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <div class="choice-list">
+                        {% for choice in question.choices.all %}
+                            <div class="choice-option">
+                                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+                <button class="button-lux button-lux--dark" type="submit">Votar</button>
+            </form>
+        </div>
+    </div>
+
+    <a class="button-lux button-lux--ghost" href="{% url 'amore:index' %}">Volver a Encuestas</a>
+</section>
+{% endblock %}

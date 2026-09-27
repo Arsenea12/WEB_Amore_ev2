@@ -1,0 +1,27 @@
+{% extends "amore/base.html" %}
+
+{% block title %}{% if producto %}Editar producto{% else %}Nuevo producto{% endif %}{% endblock %}
+{% block nav_productos %}active{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>{% if producto %}Editar producto{% else %}Nuevo producto{% endif %}</h2>
+        <span class="eyebrow-lux">Catálogo</span>
+    </div>
+
+    <form method="post" style="display:flex;flex-direction:column;gap:1.25rem;max-width:560px;">
+        {% csrf_token %}
+        {% for field in form %}
+            <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                <span style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">{{ field.label }}</span>
+                {{ field }}
+                {% if field.errors %}
+                    <span class="error-message">{{ field.errors|striptags }}</span>
+                {% endif %}
+            </label>
+        {% endfor %}
+        <button class="button-lux button-lux--dark" type="submit">Guardar producto</button>
+    </form>
+</section>
+{% endblock %}

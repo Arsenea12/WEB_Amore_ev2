@@ -1,0 +1,27 @@
+{% extends "amore/base.html" %}
+
+{% block title %}Ingresar{% endblock %}
+
+{% block content %}
+<section class="lux-shell">
+    <div class="section-head">
+        <h2>Ingresar</h2>
+        <span class="eyebrow-lux">Acceso administrativo</span>
+    </div>
+
+    <form method="post" style="display:flex;flex-direction:column;gap:1.25rem;max-width:420px;">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p class="error-message"><strong>Usuario o contraseña incorrectos.</strong></p>
+        {% endif %}
+        {% for field in form %}
+            <label style="display:flex;flex-direction:column;gap:0.4rem;">
+                <span style="font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">{{ field.label }}</span>
+                {{ field }}
+            </label>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button class="button-lux button-lux--dark" type="submit">Ingresar</button>
+    </form>
+</section>
+{% endblock %}
