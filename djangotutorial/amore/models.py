@@ -75,3 +75,36 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class VotoRegistrado(models.Model):
+    """
+    Registra que un usuario (autenticado vía JWT) ya votó en una encuesta,
+    para que la API pueda rechazar un segundo voto del mismo usuario.
+    Es el equivalente, para la API, de la restricción por sesión que usa
+    el sitio web normal (ver vote() en views.py).
+    """
+
+    usuario = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="votos_api",
+        verbose_name="Usuario",
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="votos_registrados",
+        verbose_name="Pregunta",
+    )
+    fecha = models.DateTimeField("Fecha del voto", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Voto registrado (API)"
+        verbose_name_plural = "Votos registrados (API)"
+        constraints = [
+            models.UniqueConstraint(fields=["usuario", "question"], name="un_voto_por_usuario_y_pregunta")
+        ]
+
+    def __str__(self):
+        return f"{self.usuario} votó en '{self.question}'"

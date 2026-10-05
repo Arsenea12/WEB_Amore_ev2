@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "debug_toolbar",
+    "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
@@ -156,3 +158,54 @@ try:
     INTERNAL_IPS += [ip[: ip.rfind(".")] + ".1" for ip in ips]
 except socket.gaierror:
     pass
+
+
+# -----------------------------------------------------------------------
+# Django REST Framework (Unidad 3 - API RESTful)
+# -----------------------------------------------------------------------
+from datetime import timedelta
+
+REST_FRAMEWORK = {
+    # Por defecto, todo requiere estar autenticado salvo que la vista diga
+    # explícitamente lo contrario (principio de seguridad "deny by default").
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # Permite usar el botón "Log in" de la interfaz navegable de DRF
+        # (http://localhost:8000/api/) con la sesión normal del sitio.
+        # Los clientes reales de la API (apps, Postman, etc.) siguen
+        # usando JWT; esto es solo una comodidad para explorar/probar
+        # desde el navegador.
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    # Throttling: limita cuántas peticiones puede hacer un cliente por
+    # minuto, como medida de seguridad básica contra fuerza bruta / abuso.
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "30/minute",
+        "user": "120/minute",
+    },
+}
+
+# Recomendaciones de seguridad para JWT (validadas con apoyo de IA, ver
+# README → "Uso de IA en el desarrollo de la API"):
+# - Access token de vida corta: aunque alguien lo intercepte, expira rápido.
+# - Refresh token con rotación: cada uso genera uno nuevo.
+# - Blacklist tras rotación: un refresh token usado una vez queda inválido
+#   para siempre, así que no se puede reutilizar (mitiga robo de tokens).
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}

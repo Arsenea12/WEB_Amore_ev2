@@ -1,7 +1,7 @@
 
 # Register your models here.
 from django.contrib import admin
-from .models import Choice, Producto, Question
+from .models import Choice, Producto, Question, VotoRegistrado
 
 
 class ChoiceInline(admin.TabularInline):
@@ -29,3 +29,11 @@ class ProductoAdmin(admin.ModelAdmin):
     list_filter = ["tipo", "disponible"]
     search_fields = ["nombre", "descripcion"]
     readonly_fields = ["fecha_creacion", "fecha_actualizacion"]
+
+
+@admin.register(VotoRegistrado)
+class VotoRegistradoAdmin(admin.ModelAdmin):
+    list_display = ["usuario", "question", "fecha"]
+    list_filter = ["fecha"]
+    search_fields = ["usuario__username", "question__question_text"]
+    readonly_fields = ["fecha"]
